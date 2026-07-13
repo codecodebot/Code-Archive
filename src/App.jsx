@@ -3,7 +3,7 @@ import './index.css';
 import { weeklySummary } from './data.js';
 
 const emptyCodeMessage =
-  '# 코드가 준비 중입니다.';
+  '# 코드모음집.py에서 이 문제와 연결되는 코드 섹션을 찾지 못했습니다.';
 
 const ProblemCard = ({ problem }) => {
   const [showCode, setShowCode] = useState(false);

@@ -1,4 +1,6 @@
-﻿const weeklyData = [
+import integratedCodeRaw from '../알고리즘_주차별_통합코드.py?raw';
+
+const weeklyData = [
   {
     week: '2주차',
     title: '우선순위 큐와 힙',
@@ -431,452 +433,59 @@ def color_map(graph):
   },
 ];
 
-const fallbackCodeByTitle = {
-  '응급실 환자 관리 프로그램': `import heapq
 
-
-def emergency_room(patients):
-    heap = []
-    for order, (name, priority) in enumerate(patients):
-        heapq.heappush(heap, (-priority, order, name))
-
-    result = []
-    while heap:
-        priority, order, name = heapq.heappop(heap)
-        result.append((name, -priority))
-    return result
-
-
-patients = [("A", 3), ("B", 5), ("C", 2)]
-print(emergency_room(patients))`,
-  '다익스트라 알고리즘 구현': `import heapq
-
-
-def dijkstra(graph, start):
-    dist = {node: float("inf") for node in graph}
-    dist[start] = 0
-    heap = [(0, start)]
-
-    while heap:
-        current_dist, node = heapq.heappop(heap)
-        if current_dist > dist[node]:
-            continue
-
-        for next_node, weight in graph[node]:
-            new_dist = current_dist + weight
-            if new_dist < dist[next_node]:
-                dist[next_node] = new_dist
-                heapq.heappush(heap, (new_dist, next_node))
-
-    return dist`,
-  '라면 공장': `import heapq
-
-
-def ramen_factory(stock, dates, supplies, k):
-    answer = 0
-    idx = 0
-    heap = []
-
-    while stock < k:
-        while idx < len(dates) and dates[idx] <= stock:
-            heapq.heappush(heap, -supplies[idx])
-            idx += 1
-
-        if not heap:
-            return -1
-
-        stock += -heapq.heappop(heap)
-        answer += 1
-
-    return answer`,
-  '배운 내용 구현하기': `class HashTable:
-    def __init__(self, size=10):
-        self.size = size
-        self.table = [[] for _ in range(size)]
-
-    def hash(self, key):
-        return key % self.size
-
-    def insert(self, key, value):
-        bucket = self.table[self.hash(key)]
-        for i, (k, _) in enumerate(bucket):
-            if k == key:
-                bucket[i] = (key, value)
-                return
-        bucket.append((key, value))
-
-    def search(self, key):
-        for k, value in self.table[self.hash(key)]:
-            if k == key:
-                return value
-        return None`,
-  '급식실 출석 확인': `def check_attendance(registered, entered):
-    registered_set = set(registered)
-    result = {}
-
-    for student in entered:
-        result[student] = student in registered_set
-
-    return result
-
-
-registered = ["민수", "지민", "서연"]
-entered = ["지민", "도윤"]
-print(check_attendance(registered, entered))`,
-  '두 개의 수로 특정값 만들기': `def two_sum(nums, target):
-    seen = {}
-
-    for i, num in enumerate(nums):
-        need = target - num
-        if need in seen:
-            return seen[need], i
-        seen[num] = i
-
-    return None
-
-
-print(two_sum([2, 7, 11, 15], 9))`,
-  '숫자 카드 개수 구하기': `from collections import Counter
-
-
-cards = list(map(int, input().split()))
-queries = list(map(int, input().split()))
-
-counter = Counter(cards)
-print(*[counter[q] for q in queries])`,
-  '문자열 내 최소 반복 단위': `def prefix_table(pattern):
-    table = [0] * len(pattern)
-    j = 0
-
-    for i in range(1, len(pattern)):
-        while j > 0 and pattern[i] != pattern[j]:
-            j = table[j - 1]
-        if pattern[i] == pattern[j]:
-            j += 1
-            table[i] = j
-    return table
-
-
-def min_repeat_unit(s):
-    table = prefix_table(s)
-    unit = len(s) - table[-1]
-    return s[:unit] if len(s) % unit == 0 else s`,
-  '최장 공통 부분 구하기': `def longest_common_substring(a, b):
-    dp = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]
-    answer = 0
-
-    for i in range(1, len(a) + 1):
-        for j in range(1, len(b) + 1):
-            if a[i - 1] == b[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
-                answer = max(answer, dp[i][j])
-
-    return answer`,
-  '시간복잡도 구하기': `def compare_complexity(n):
-    one_loop = n
-    nested_loop = n * n
-    binary_search = 0
-
-    value = n
-    while value > 1:
-        value //= 2
-        binary_search += 1
-
-    return one_loop, nested_loop, binary_search`,
-  '합이 k인 두 수 만들기': `def make_sum_k(nums, k):
-    seen = set()
-
-    for num in nums:
-        if k - num in seen:
-            return True
-        seen.add(num)
-
-    return False`,
-  '성적 상위 k명 뽑기': `import heapq
-
-
-def top_k_scores(scores, k):
-    return heapq.nlargest(k, scores)
-
-
-print(top_k_scores([80, 95, 70, 100, 85], 3))`,
-  '가장 가까운 두 수': `def closest_two_numbers(nums):
-    nums.sort()
-    best = float("inf")
-    pair = None
-
-    for i in range(1, len(nums)):
-        diff = nums[i] - nums[i - 1]
-        if diff < best:
-            best = diff
-            pair = (nums[i - 1], nums[i])
-
-    return pair, best`,
-  '섬의 개수 세기': `def count_islands(grid):
-    rows, cols = len(grid), len(grid[0])
-
-    def dfs(r, c):
-        if r < 0 or r >= rows or c < 0 or c >= cols:
-            return
-        if grid[r][c] == 0:
-            return
-        grid[r][c] = 0
-        dfs(r + 1, c)
-        dfs(r - 1, c)
-        dfs(r, c + 1)
-        dfs(r, c - 1)
-
-    count = 0
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] == 1:
-                count += 1
-                dfs(r, c)
-    return count`,
-  '거스름돈 문제': `def change_count(amount, coins):
-    result = {}
-
-    for coin in sorted(coins, reverse=True):
-        result[coin] = amount // coin
-        amount %= coin
-
-    return result if amount == 0 else None`,
-  '허프만 코딩': `import heapq
-
-
-def huffman(freq):
-    heap = [[weight, [char, ""]] for char, weight in freq.items()]
-    heapq.heapify(heap)
-
-    while len(heap) > 1:
-        left = heapq.heappop(heap)
-        right = heapq.heappop(heap)
-
-        for pair in left[1:]:
-            pair[1] = "0" + pair[1]
-        for pair in right[1:]:
-            pair[1] = "1" + pair[1]
-
-        heapq.heappush(heap, [left[0] + right[0]] + left[1:] + right[1:])
-
-    return dict(sorted(heap[0][1:]))`,
-  '큰 수 만들기': `def make_big_number(number, k):
-    stack = []
-
-    for digit in number:
-        while k > 0 and stack and stack[-1] < digit:
-            stack.pop()
-            k -= 1
-        stack.append(digit)
-
-    if k:
-        stack = stack[:-k]
-    return "".join(stack)`,
-  '이진탐색': `def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
-            return mid
-        if arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-
-    return -1`,
-  '수식과 괄호 삽입': `def diff_ways(expression):
-    if expression.isdigit():
-        return [int(expression)]
-
-    result = []
-    for i, ch in enumerate(expression):
-        if ch in "+-*":
-            left = diff_ways(expression[:i])
-            right = diff_ways(expression[i + 1:])
-            for a in left:
-                for b in right:
-                    result.append(eval(f"{a}{ch}{b}"))
-
-    return result`,
-  '학급회장 찾기': `def majority_vote(votes):
-    candidate = None
-    count = 0
-
-    for vote in votes:
-        if count == 0:
-            candidate = vote
-        count += 1 if vote == candidate else -1
-
-    return candidate if votes.count(candidate) > len(votes) // 2 else None`,
-  '쿼드 트리': `def quadtree(board):
-    n = len(board)
-
-    def compress(r, c, size):
-        first = board[r][c]
-        same = all(board[i][j] == first for i in range(r, r + size) for j in range(c, c + size))
-        if same:
-            return first
-
-        half = size // 2
-        return "(" + compress(r, c, half) + compress(r, c + half, half) + compress(r + half, c, half) + compress(r + half, c + half, half) + ")"
-
-    return compress(0, 0, n)`,
-  '최근접 점 쌍': `import math
-
-
-def closest_pair(points):
-    points.sort()
-    answer = float("inf")
-
-    for i in range(len(points)):
-        for j in range(i + 1, len(points)):
-            dist = math.dist(points[i], points[j])
-            answer = min(answer, dist)
-
-    return answer`,
-  '광고 가성비 챙기기': `def best_ad_slot(viewers, length):
-    current = sum(viewers[:length])
-    best = current
-    best_start = 0
-
-    for start in range(1, len(viewers) - length + 1):
-        current += viewers[start + length - 1] - viewers[start - 1]
-        if current > best:
-            best = current
-            best_start = start
-
-    return best_start, best`,
-  '최장 공통 부분 수열 구현': `def lcs(a, b):
-    dp = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]
-
-    for i in range(1, len(a) + 1):
-        for j in range(1, len(b) + 1):
-            if a[i - 1] == b[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
-            else:
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
-
-    return dp[-1][-1]`,
-  '최대 서브 배열': `def max_sub_array(nums):
-    best = current = nums[0]
-
-    for num in nums[1:]:
-        current = max(num, current + num)
-        best = max(best, current)
-
-    return best`,
-  '집 도둑': `def rob(nums):
-    prev2 = 0
-    prev1 = 0
-
-    for money in nums:
-        prev2, prev1 = prev1, max(prev1, prev2 + money)
-
-    return prev1`,
-  '박람회 부스 배치': `def booth_knapsack(weights, values, capacity):
-    dp = [0] * (capacity + 1)
-
-    for weight, value in zip(weights, values):
-        for c in range(capacity, weight - 1, -1):
-            dp[c] = max(dp[c], dp[c - weight] + value)
-
-    return dp[capacity]`,
-  '상점 받기 게임': `def max_store_score(grid):
-    rows, cols = len(grid), len(grid[0])
-    dp = [[0] * cols for _ in range(rows)]
-    dp[0][0] = grid[0][0]
-
-    for r in range(rows):
-        for c in range(cols):
-            if r > 0:
-                dp[r][c] = max(dp[r][c], dp[r - 1][c] + grid[r][c])
-            if c > 0:
-                dp[r][c] = max(dp[r][c], dp[r][c - 1] + grid[r][c])
-
-    return dp[-1][-1]`,
-  '미로 탈출하기 구현': `from collections import deque
-
-
-def escape_maze(maze, start, end):
-    rows, cols = len(maze), len(maze[0])
-    queue = deque([(start[0], start[1], 0)])
-    visited = {start}
-
-    while queue:
-        r, c, dist = queue.popleft()
-        if (r, c) == end:
-            return dist
-
-        for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-            nr, nc = r + dr, c + dc
-            if 0 <= nr < rows and 0 <= nc < cols and maze[nr][nc] == 0 and (nr, nc) not in visited:
-                visited.add((nr, nc))
-                queue.append((nr, nc, dist + 1))
-
-    return -1`,
-  '순열 생성': `def permutations(items):
-    result = []
-    used = [False] * len(items)
-
-    def backtrack(path):
-        if len(path) == len(items):
-            result.append(path[:])
-            return
-
-        for i, item in enumerate(items):
-            if used[i]:
-                continue
-            used[i] = True
-            path.append(item)
-            backtrack(path)
-            path.pop()
-            used[i] = False
-
-    backtrack([])
-    return result`,
-  '스도쿠 풀기': `def solve_sudoku(board):
-    def valid(r, c, num):
-        for i in range(4):
-            if board[r][i] == num or board[i][c] == num:
-                return False
-        sr, sc = (r // 2) * 2, (c // 2) * 2
-        for i in range(sr, sr + 2):
-            for j in range(sc, sc + 2):
-                if board[i][j] == num:
-                    return False
-        return True
-
-    for r in range(4):
-        for c in range(4):
-            if board[r][c] == 0:
-                for num in range(1, 5):
-                    if valid(r, c, num):
-                        board[r][c] = num
-                        if solve_sudoku(board):
-                            return True
-                        board[r][c] = 0
-                return False
-    return True`,
-  '숫자 골라 최대 합 만들기': `def max_sum_pick(nums, limit):
-    best = 0
-
-    def backtrack(index, current):
-        nonlocal best
-        if current > limit:
-            return
-        best = max(best, current)
-        for i in range(index, len(nums)):
-            backtrack(i + 1, current + nums[i])
-
-    backtrack(0, 0)
-    return best`,
+const sourceSections = integratedCodeRaw
+  .split(/(?=^# %% .*$)/m)
+  .filter((section) => section.startsWith('# %%'));
+
+const getSourceCode = (...headers) => {
+  return headers
+    .flatMap((header) => sourceSections.filter((section) => section.startsWith('# %% ' + header)))
+    .join('\n\n')
+    .trim();
+};
+
+const sourceCodeById = {
+  '3-1': getSourceCode('[3~4주차] 나눗셈 해싱', '[3~4주차] 자릿수 접기 해싱', '[3~4주차] 체이닝', '[3~4주차] BST + 체이닝', '[3~4주차] Tombstone', '[3~4주차] 선형 탐사', '[3~4주차] 제곱 탐사', '[3~4주차] Double Hashing', '[3~4주차] Rehashing', '[3~4주차] ReDouble', '[3~4주차] ReQuad', '[3~4주차] ReLinear'),
+  '3-2': getSourceCode('[3~4주차] 급식실 출석 확인'),
+  '3-3': getSourceCode('[3~4주차] 하지만 우리에겐? 해싱이 있다!'),
+  '3-4': getSourceCode('[3~4주차] 3-B'),
+  '4-1': getSourceCode('[11~12주차] 코드 셀 1', '[11~12주차] 코드 셀 2', '[11~12주차] 코드 셀 3', '[11~12주차] 코드 셀 4', '[11~12주차] 코드 셀 5'),
+  '4-2': getSourceCode('[11~12주차] 코드 셀 6'),
+  '4-3': getSourceCode('[11~12주차] 코드 셀 7'),
+  '5-2': getSourceCode('[1~2주차] 합이 k인 두 수 구하기'),
+  '5-3': getSourceCode('[1~2주차] 성적 상위 k명 뽑기'),
+  '5-4': getSourceCode('[1~2주차] 4.계단 오르기'),
+  '5-5': getSourceCode('[1~2주차] 가장 가까운 두 수'),
+  '5-6': getSourceCode('[1~2주차] 섬의 개수 세기'),
+  '6-1': getSourceCode('[9~10주차] 거스름돈'),
+  '6-2': getSourceCode('[9~10주차] 도시 MST 만들고 분할 하기'),
+  '6-3': getSourceCode('[9~10주차] Kruskal과 Prim은 왜 정당화 되는가?'),
+  '6-4': getSourceCode('[9~10주차] 허프만 코딩'),
+  '6-5': getSourceCode('[9~10주차] 큰 수 만들기'),
+  '7-1': getSourceCode('[13~14주차] 이진탐색'),
+  '7-2': getSourceCode('[13~14주차] 수식과 괄호 삽입'),
+  '7-3': getSourceCode('[13~14주차] 학급회장 찾기'),
+  '7-4': getSourceCode('[13~14주차] 쿼드 트리'),
+  '7-5': getSourceCode('[13~14주차] 최근접 점 쌍'),
+  '7-6': getSourceCode('[13~14주차] 광고 가성비 챙기기'),
+  '8-1': getSourceCode('[5~6주차] 1. 계단 오르기'),
+  '8-2': getSourceCode('[5~6주차] 2. 최장 공통 부분 수열 구현'),
+  '8-3': getSourceCode('[5~6주차] 동적계획법'),
+  '8-4': getSourceCode('[5~6주차] 4. 집 도둑'),
+  '8-5': getSourceCode('[5~6주차] 5. 박람회 부스 배치'),
+  '8-6': getSourceCode('[5~6주차] 6. 상점 받기 게임'),
+  '9-1': getSourceCode('[7~8주차] 1. 미로 탈출하기 구현'),
+  '9-2': getSourceCode('[7~8주차] 2. 지도 색칠하기 구현'),
+  '9-3': getSourceCode('[7~8주차] 3. 순열 생성'),
+  '9-4': getSourceCode('[7~8주차] 4. 스도쿠 풀기'),
+  '9-5': getSourceCode('[7~8주차] 5. 숫자 골라 최대합 만들기'),
 };
 
 for (const week of weeklyData) {
   for (const problem of week.problems) {
-    if (!problem.code?.trim() && fallbackCodeByTitle[problem.title]) {
-      problem.code = fallbackCodeByTitle[problem.title];
+    if (sourceCodeById[problem.id]) {
+      problem.code = sourceCodeById[problem.id];
     }
   }
 }
