@@ -140,7 +140,7 @@ const TopSummary = ({ data }) => {
   return (
     <div className="top-summary">
       <div className="summary-note">
-        기여도는 검토 기준으로, 주차별 문제를 모두 분리해 정리했습니다.
+        기여도는 확인된 구현·검수·발표 준비 기록을 기준으로 표시하고, 확인되지 않은 항목만 검토 30%로 표시합니다.
       </div>
       <div className="summary-card">
         <h3>Total Weeks</h3>
