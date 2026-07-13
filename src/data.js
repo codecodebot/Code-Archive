@@ -1,4 +1,5 @@
 import integratedCodeRaw from '../알고리즘_주차별_통합코드.py?raw';
+import week2NotebookRaw from '../2주차_우선순위_큐와_힙 (1).ipynb?raw';
 
 const weeklyData = [
   {
@@ -445,7 +446,22 @@ const getSourceCode = (...headers) => {
     .trim();
 };
 
+const week2Notebook = JSON.parse(week2NotebookRaw);
+
+const getNotebookCode = (...cellIndexes) => {
+  return cellIndexes
+    .map((cellIndex) => {
+      const source = week2Notebook.cells[cellIndex]?.source || '';
+      return Array.isArray(source) ? source.join('') : source;
+    })
+    .join('\n\n')
+    .trim();
+};
+
 const sourceCodeById = {
+  '2-1': getNotebookCode(47, 48, 49, 50),
+  '2-2': getNotebookCode(35, 43),
+  '2-3': getNotebookCode(53, 54),
   '3-1': getSourceCode('[3~4주차] 나눗셈 해싱', '[3~4주차] 자릿수 접기 해싱', '[3~4주차] 체이닝', '[3~4주차] BST + 체이닝', '[3~4주차] Tombstone', '[3~4주차] 선형 탐사', '[3~4주차] 제곱 탐사', '[3~4주차] Double Hashing', '[3~4주차] Rehashing', '[3~4주차] ReDouble', '[3~4주차] ReQuad', '[3~4주차] ReLinear'),
   '3-2': getSourceCode('[3~4주차] 급식실 출석 확인'),
   '3-3': getSourceCode('[3~4주차] 하지만 우리에겐? 해싱이 있다!'),
