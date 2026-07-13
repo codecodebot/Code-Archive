@@ -11,26 +11,7 @@ const weeklyData = [
         completed: true,
         contribution: '검토',
         percentage: 30,
-        code: `# 2주차 - 응급실 환자 관리 프로그램
-from collections import deque
-
-
-def emergency_room(patients, my_index):
-    q = deque([(i, p) for i, p in enumerate(patients)])
-    order = 0
-
-    while q:
-        idx, priority = q.popleft()
-
-        if any(priority < other for _, other in q):
-            q.append((idx, priority))
-            continue
-
-        order += 1
-        if idx == my_index:
-            return order
-
-    return order`,
+        code: '',
       },
       {
         id: '2-2',
@@ -38,27 +19,7 @@ def emergency_room(patients, my_index):
         completed: true,
         contribution: '검토',
         percentage: 30,
-        code: `# 2주차 - 다익스트라 알고리즘 구현
-import heapq
-
-
-def dijkstra(graph, start):
-    dist = {node: float('inf') for node in graph}
-    dist[start] = 0
-    pq = [(0, start)]
-
-    while pq:
-        cur_dist, node = heapq.heappop(pq)
-        if cur_dist > dist[node]:
-            continue
-
-        for next_node, weight in graph[node]:
-            new_dist = cur_dist + weight
-            if new_dist < dist[next_node]:
-                dist[next_node] = new_dist
-                heapq.heappush(pq, (new_dist, next_node))
-
-    return dist`,
+        code: '',
       },
       {
         id: '2-3',
@@ -66,31 +27,14 @@ def dijkstra(graph, start):
         completed: true,
         contribution: '검토',
         percentage: 30,
-        code: `# 2주차 - 라면 공장
-import heapq
-
-
-def ramen_factory(stock, dates, supplies, k):
-    answer = 0
-    pq = []
-    i = 0
-
-    while stock < k:
-        while i < len(dates) and dates[i] <= stock:
-            heapq.heappush(pq, -supplies[i])
-            i += 1
-
-        stock += -heapq.heappop(pq)
-        answer += 1
-
-    return answer`,
+        code: '',
       },
     ],
   },
   {
     week: '3주차',
     title: '해시 테이블',
-    concept: '해시 기반 자료구조를 이용해 탐색과 집계를 나누어 정리',
+    concept: '해시 기반 자료구조를 이용해 탐색과 집계를 분리해 정리',
     files: [],
     problems: [
       { id: '3-1', title: '배운 내용 구현하기', completed: true, contribution: '검토', percentage: 30, code: '' },
@@ -113,7 +57,7 @@ def ramen_factory(stock, dates, supplies, k):
   {
     week: '5주차',
     title: '알고리즘 설계와 성능 분석',
-    concept: '시간복잡도와 탐색/정렬/DP 응용 문제를 개별 항목으로 분리',
+    concept: '시간복잡도와 탐색, 정렬, DP 응용 문제를 개별 항목으로 분리',
     files: [],
     problems: [
       { id: '5-1', title: '시간복잡도 구하기', completed: true, contribution: '검토', percentage: 30, code: '' },

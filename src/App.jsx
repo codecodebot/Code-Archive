@@ -162,6 +162,7 @@ const TopSummary = ({ data }) => {
 
 const App = () => {
   const [activeWeek, setActiveWeek] = useState('All');
+  // Force a refresh of the Vite dev client so the browser picks up the latest data.
 
   const displayData =
     activeWeek === 'All' ? dummyData : dummyData.filter((item) => item.week === activeWeek);
