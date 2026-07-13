@@ -14,33 +14,40 @@ const ProblemCard = ({ problem }) => {
           {problem.completed ? 'Completed' : 'In Progress'}
         </span>
       </div>
-      
+
       <div className="contribution-section">
-        <div 
-          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', marginBottom: '0.5rem' }} 
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            cursor: 'pointer',
+            marginBottom: '0.5rem',
+          }}
           onClick={() => setShowContribution(!showContribution)}
         >
           <h4 style={{ margin: 0 }}>Contribution Details</h4>
-          <span style={{ fontSize: '0.8rem', color: '#2b5c8f' }}>{showContribution ? '▲ 접기' : '▼ 펼치기'}</span>
+          <span style={{ fontSize: '0.8rem', color: '#2b5c8f' }}>
+            {showContribution ? '접기' : '펴기'}
+          </span>
         </div>
-        
+
         {showContribution && (
-          <p className="contribution-desc" style={{ marginTop: '0.5rem' }}>{problem.contribution}</p>
+          <p className="contribution-desc" style={{ marginTop: '0.5rem' }}>
+            {problem.contribution}
+          </p>
         )}
-        
+
         <div className="progress-container" style={{ marginTop: showContribution ? '1rem' : '0.5rem' }}>
           <div className="progress-bar-bg">
-            <div 
-              className="progress-bar-fill" 
-              style={{ width: `${problem.percentage}%` }}
-            ></div>
+            <div className="progress-bar-fill" style={{ width: `${problem.percentage}%` }} />
           </div>
           <span className="progress-text">{problem.percentage}%</span>
         </div>
 
         {problem.code && (
           <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #e9ecef' }}>
-            <button 
+            <button
               onClick={() => setShowCode(!showCode)}
               style={{
                 background: 'none',
@@ -52,23 +59,25 @@ const ProblemCard = ({ problem }) => {
                 fontWeight: '500',
                 fontSize: '0.875rem',
                 transition: 'all 0.2s',
-                width: '100%'
+                width: '100%',
               }}
             >
               {showCode ? 'Hide Code' : 'View Code'}
             </button>
-            
+
             {showCode && (
-              <pre style={{
-                background: '#282c34',
-                color: '#abb2bf',
-                padding: '1rem',
-                borderRadius: '6px',
-                overflowX: 'auto',
-                fontSize: '0.85rem',
-                marginTop: '1rem',
-                maxHeight: '300px'
-              }}>
+              <pre
+                style={{
+                  background: '#282c34',
+                  color: '#abb2bf',
+                  padding: '1rem',
+                  borderRadius: '6px',
+                  overflowX: 'auto',
+                  fontSize: '0.85rem',
+                  marginTop: '1rem',
+                  maxHeight: '300px',
+                }}
+              >
                 <code>{problem.code}</code>
               </pre>
             )}
@@ -79,19 +88,16 @@ const ProblemCard = ({ problem }) => {
   );
 };
 
-const WeekCard = ({ data }) => {
+const ProblemSection = ({ item }) => {
   return (
-    <div className="week-section">
+    <section className="week-section problem-section">
       <div className="week-header">
-        <h2>{data.title}</h2>
-        <p>{data.concept} | {data.files.join(', ')}</p>
+        <p className="week-label">{item.week}</p>
+        <h2>{item.weekTitle}</h2>
+        <p>{item.weekConcept}</p>
       </div>
-      <div className="problems-grid">
-        {data.problems.map(p => (
-          <ProblemCard key={p.id} problem={p} />
-        ))}
-      </div>
-    </div>
+      <ProblemCard problem={item.problem} />
+    </section>
   );
 };
 
@@ -100,14 +106,14 @@ const Sidebar = ({ weeks, activeWeek, setActiveWeek }) => {
     <aside className="sidebar">
       <h2>Archive Menu</h2>
       <ul className="nav-list">
-        <li 
+        <li
           className={`nav-item ${activeWeek === 'All' ? 'active' : ''}`}
           onClick={() => setActiveWeek('All')}
         >
-          All Weeks Overview
+          All Problems
         </li>
         {weeks.map(w => (
-          <li 
+          <li
             key={w}
             className={`nav-item ${activeWeek === w ? 'active' : ''}`}
             onClick={() => setActiveWeek(w)}
@@ -124,11 +130,11 @@ const TopSummary = ({ data }) => {
   const totalWeeks = data.length;
   const totalProblems = data.reduce((acc, week) => acc + week.problems.length, 0);
   const completedProblems = data.reduce((acc, week) => acc + week.problems.filter(p => p.completed).length, 0);
-  
+
   const totalPercentage = data.reduce((acc, week) => {
     return acc + week.problems.reduce((sum, p) => sum + p.percentage, 0);
   }, 0);
-  
+
   const avgContribution = totalProblems ? Math.round(totalPercentage / totalProblems) : 0;
 
   return (
@@ -154,26 +160,36 @@ const TopSummary = ({ data }) => {
 
 const App = () => {
   const [activeWeek, setActiveWeek] = useState('All');
-  
-  const displayData = activeWeek === 'All' 
-    ? dummyData 
-    : dummyData.filter(d => d.week === activeWeek);
+
+  const flatProblems = dummyData.flatMap(week =>
+    week.problems.map(problem => ({
+      week: week.week,
+      weekTitle: week.title,
+      weekConcept: week.concept,
+      problem,
+    }))
+  );
+
+  const displayData =
+    activeWeek === 'All'
+      ? flatProblems
+      : flatProblems.filter(item => item.week === activeWeek);
 
   const weekNumbers = dummyData.map(d => d.week);
 
   return (
     <div className="dashboard-container">
-      <Sidebar 
-        weeks={weekNumbers} 
-        activeWeek={activeWeek} 
-        setActiveWeek={setActiveWeek} 
+      <Sidebar
+        weeks={weekNumbers}
+        activeWeek={activeWeek}
+        setActiveWeek={setActiveWeek}
       />
-      
+
       <main className="main-content">
         {activeWeek === 'All' && <TopSummary data={dummyData} />}
-        
-        {displayData.map(weekData => (
-          <WeekCard key={weekData.week} data={weekData} />
+
+        {displayData.map(item => (
+          <ProblemSection key={item.problem.id} item={item} />
         ))}
       </main>
     </div>
