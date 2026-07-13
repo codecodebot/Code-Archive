@@ -1,4 +1,4 @@
-const weeklyData = [
+﻿const weeklyData = [
   {
     week: '2주차',
     title: '우선순위 큐와 힙',
@@ -18,7 +18,7 @@ const weeklyData = [
         title: '다익스트라 알고리즘 구현',
         completed: true,
         contribution: '검토',
-        percentage: 30,
+        percentage: 15,
         code: '',
       },
       {
@@ -26,7 +26,7 @@ const weeklyData = [
         title: '라면 공장',
         completed: true,
         contribution: '검토',
-        percentage: 30,
+        percentage: 15,
         code: '',
       },
     ],
@@ -77,9 +77,9 @@ const weeklyData = [
     concept: '문자열 매칭과 부분 문자열 성질을 분리하여 분석',
     files: [],
     problems: [
-      { id: '4-1', title: '배운 내용 구현하기', completed: true, contribution: '검토', percentage: 30, code: '' },
-      { id: '4-2', title: '문자열 내 최소 반복 단위', completed: true, contribution: '검토', percentage: 30, code: '' },
-      { id: '4-3', title: '최장 공통 부분 구하기', completed: true, contribution: '검토', percentage: 30, code: '' },
+      { id: '4-1', title: '배운 내용 구현하기', completed: true, contribution: '검토', percentage: 15, code: '' },
+      { id: '4-2', title: '문자열 내 최소 반복 단위', completed: true, contribution: '검토', percentage: 15, code: '' },
+      { id: '4-3', title: '최장 공통 부분 구하기', completed: true, contribution: '검토', percentage: 15, code: '' },
     ],
   },
   {
@@ -88,7 +88,7 @@ const weeklyData = [
     concept: '시간복잡도와 탐색, 정렬, DP 응용 문제를 개별 항목으로 분리',
     files: [],
     problems: [
-      { id: '5-1', title: '시간복잡도 구하기', completed: true, contribution: '검토', percentage: 30, code: '' },
+      { id: '5-1', title: '시간복잡도 구하기', completed: true, contribution: '검토', percentage: 15, code: '' },
       {
         id: '5-2',
         title: '합이 k인 두 수 만들기',
@@ -97,10 +97,10 @@ const weeklyData = [
         percentage: 100,
         code: '',
       },
-      { id: '5-3', title: '성적 상위 k명 뽑기', completed: true, contribution: '검토', percentage: 30, code: '' },
-      { id: '5-4', title: '계단 오르기', completed: true, contribution: '검토', percentage: 30, code: '' },
-      { id: '5-5', title: '가장 가까운 두 수', completed: true, contribution: '검토', percentage: 30, code: '' },
-      { id: '5-6', title: '섬의 개수 세기', completed: true, contribution: '검토', percentage: 30, code: '' },
+      { id: '5-3', title: '성적 상위 k명 뽑기', completed: true, contribution: '검토', percentage: 15, code: '' },
+      { id: '5-4', title: '계단 오르기', completed: true, contribution: '검토', percentage: 15, code: '' },
+      { id: '5-5', title: '가장 가까운 두 수', completed: true, contribution: '검토', percentage: 15, code: '' },
+      { id: '5-6', title: '섬의 개수 세기', completed: true, contribution: '검토', percentage: 15, code: '' },
     ],
   },
   {
@@ -114,7 +114,7 @@ const weeklyData = [
         title: '거스름돈 문제',
         completed: true,
         contribution: '발표 담당은 아니지만 팀 전체 제출 코드 검수 과정에서 정상 입력 작동 여부와 잘못된 입력 처리 방식을 확인함',
-        percentage: 30,
+        percentage: 15,
         code: '',
       },
       {
@@ -146,7 +146,7 @@ const weeklyData = [
         title: '큰 수 만들기',
         completed: true,
         contribution: '발표 담당은 아니지만 전체 제출 코드 검수에서 스택 기반 구현의 정상 동작 여부를 확인함',
-        percentage: 30,
+        percentage: 15,
         code: '',
       },
     ],
@@ -229,7 +229,7 @@ const weeklyData = [
         percentage: 90,
         code: '',
       },
-      { id: '8-3', title: '최대 서브 배열', completed: true, contribution: '검토', percentage: 30, code: '' },
+      { id: '8-3', title: '최대 서브 배열', completed: true, contribution: '검토', percentage: 15, code: '' },
       {
         id: '8-4',
         title: '집 도둑',
@@ -262,7 +262,7 @@ const weeklyData = [
     concept: '탐색 가지치기와 완전탐색 문제를 개별 항목으로 정리',
     files: [],
     problems: [
-      { id: '9-1', title: '미로 탈출하기 구현', completed: true, contribution: '검토', percentage: 30, code: '' },
+      { id: '9-1', title: '미로 탈출하기 구현', completed: true, contribution: '검토', percentage: 15, code: '' },
       {
         id: '9-2',
         title: '지도 색칠하기 구현',
@@ -271,7 +271,7 @@ const weeklyData = [
         percentage: 100,
         code: '',
       },
-      { id: '9-3', title: '순열 생성', completed: true, contribution: '검토', percentage: 30, code: '' },
+      { id: '9-3', title: '순열 생성', completed: true, contribution: '검토', percentage: 15, code: '' },
       {
         id: '9-4',
         title: '스도쿠 풀기',
@@ -280,7 +280,7 @@ const weeklyData = [
         percentage: 100,
         code: '',
       },
-      { id: '9-5', title: '숫자 골라 최대 합 만들기', completed: true, contribution: '검토', percentage: 30, code: '' },
+      { id: '9-5', title: '숫자 골라 최대 합 만들기', completed: true, contribution: '검토', percentage: 15, code: '' },
     ],
   },
 ];
