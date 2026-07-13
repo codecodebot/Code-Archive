@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './index.css';
-import { dummyData } from './data.js';
+import { dummyData, weeklySummary } from './data.js';
 
 const ProblemCard = ({ problem }) => {
   const [showCode, setShowCode] = useState(false);
@@ -96,7 +96,7 @@ const ProblemSection = ({ item }) => {
         <h2>{item.weekTitle}</h2>
         <p>{item.weekConcept}</p>
       </div>
-      <ProblemCard problem={item.problem} />
+      <ProblemCard problem={item} />
     </section>
   );
 };
@@ -112,7 +112,7 @@ const Sidebar = ({ weeks, activeWeek, setActiveWeek }) => {
         >
           All Problems
         </li>
-        {weeks.map(w => (
+        {weeks.map((w) => (
           <li
             key={w}
             className={`nav-item ${activeWeek === w ? 'active' : ''}`}
@@ -129,7 +129,7 @@ const Sidebar = ({ weeks, activeWeek, setActiveWeek }) => {
 const TopSummary = ({ data }) => {
   const totalWeeks = data.length;
   const totalProblems = data.reduce((acc, week) => acc + week.problems.length, 0);
-  const completedProblems = data.reduce((acc, week) => acc + week.problems.filter(p => p.completed).length, 0);
+  const completedProblems = data.reduce((acc, week) => acc + week.problems.filter((p) => p.completed).length, 0);
 
   const totalPercentage = data.reduce((acc, week) => {
     return acc + week.problems.reduce((sum, p) => sum + p.percentage, 0);
@@ -140,7 +140,7 @@ const TopSummary = ({ data }) => {
   return (
     <div className="top-summary">
       <div className="summary-note">
-        기여도는 검토, 정리, 보완 기준으로 표시했습니다.
+        기여도는 검토 기준으로, 주차별 문제를 모두 분리해 정리했습니다.
       </div>
       <div className="summary-card">
         <h3>Total Weeks</h3>
@@ -148,7 +148,9 @@ const TopSummary = ({ data }) => {
       </div>
       <div className="summary-card">
         <h3>Problems Completed</h3>
-        <p className="value">{completedProblems} / {totalProblems}</p>
+        <p className="value">
+          {completedProblems} / {totalProblems}
+        </p>
       </div>
       <div className="summary-card">
         <h3>Average Contribution</h3>
@@ -161,35 +163,20 @@ const TopSummary = ({ data }) => {
 const App = () => {
   const [activeWeek, setActiveWeek] = useState('All');
 
-  const flatProblems = dummyData.flatMap(week =>
-    week.problems.map(problem => ({
-      week: week.week,
-      weekTitle: week.title,
-      weekConcept: week.concept,
-      problem,
-    }))
-  );
-
   const displayData =
-    activeWeek === 'All'
-      ? flatProblems
-      : flatProblems.filter(item => item.week === activeWeek);
+    activeWeek === 'All' ? dummyData : dummyData.filter((item) => item.week === activeWeek);
 
-  const weekNumbers = dummyData.map(d => d.week);
+  const weekNumbers = weeklySummary.map((d) => d.week);
 
   return (
     <div className="dashboard-container">
-      <Sidebar
-        weeks={weekNumbers}
-        activeWeek={activeWeek}
-        setActiveWeek={setActiveWeek}
-      />
+      <Sidebar weeks={weekNumbers} activeWeek={activeWeek} setActiveWeek={setActiveWeek} />
 
       <main className="main-content">
-        {activeWeek === 'All' && <TopSummary data={dummyData} />}
+        {activeWeek === 'All' && <TopSummary data={weeklySummary} />}
 
-        {displayData.map(item => (
-          <ProblemSection key={item.problem.id} item={item} />
+        {displayData.map((item) => (
+          <ProblemSection key={item.id} item={item} />
         ))}
       </main>
     </div>
