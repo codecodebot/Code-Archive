@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './index.css';
-import { dummyData, weeklySummary } from './data.js';
+import { weeklySummary } from './data.js';
 
 const ProblemCard = ({ problem }) => {
   const [showCode, setShowCode] = useState(false);
@@ -88,15 +88,19 @@ const ProblemCard = ({ problem }) => {
   );
 };
 
-const ProblemSection = ({ item }) => {
+const WeekCard = ({ week }) => {
   return (
-    <section className="week-section problem-section">
+    <section className="week-section">
       <div className="week-header">
-        <p className="week-label">{item.week}</p>
-        <h2>{item.weekTitle}</h2>
-        <p>{item.weekConcept}</p>
+        <p className="week-label">{week.week}</p>
+        <h2>{week.title}</h2>
+        <p>{week.concept}</p>
       </div>
-      <ProblemCard problem={item} />
+      <div className="problems-grid">
+        {week.problems.map((problem) => (
+          <ProblemCard key={problem.id} problem={problem} />
+        ))}
+      </div>
     </section>
   );
 };
@@ -110,7 +114,7 @@ const Sidebar = ({ weeks, activeWeek, setActiveWeek }) => {
           className={`nav-item ${activeWeek === 'All' ? 'active' : ''}`}
           onClick={() => setActiveWeek('All')}
         >
-          All Problems
+        All Weeks
         </li>
         {weeks.map((w) => (
           <li
@@ -162,10 +166,8 @@ const TopSummary = ({ data }) => {
 
 const App = () => {
   const [activeWeek, setActiveWeek] = useState('All');
-  // Force a refresh of the Vite dev client so the browser picks up the latest data.
-
   const displayData =
-    activeWeek === 'All' ? dummyData : dummyData.filter((item) => item.week === activeWeek);
+    activeWeek === 'All' ? weeklySummary : weeklySummary.filter((week) => week.week === activeWeek);
 
   const weekNumbers = weeklySummary.map((d) => d.week);
 
@@ -176,8 +178,8 @@ const App = () => {
       <main className="main-content">
         {activeWeek === 'All' && <TopSummary data={weeklySummary} />}
 
-        {displayData.map((item) => (
-          <ProblemSection key={item.id} item={item} />
+        {displayData.map((week) => (
+          <WeekCard key={week.week} week={week} />
         ))}
       </main>
     </div>
