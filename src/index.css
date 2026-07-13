@@ -179,6 +179,30 @@ body {
   color: #8a5600;
   font-size: 0.75rem;
   font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.highlight-badge:hover,
+.highlight-badge.active {
+  background-color: #ffe8ad;
+  border-color: #9c6500;
+  transform: translateY(-1px);
+}
+
+.advanced-panel {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #f2c46d;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff8e7, #fffdf6);
+  color: #594000;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.advanced-panel p {
+  margin: 0;
 }
 
 .status-badge {
@@ -204,10 +228,24 @@ body {
   border-top: 1px solid var(--border-color);
 }
 
-.contribution-section h4 {
+.toggle-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
   font-size: 0.875rem;
   color: #6c757d;
   margin: 0 0 0.5rem 0;
+}
+
+.toggle-row span:last-child {
+  color: var(--accent-color);
+  font-size: 0.8rem;
 }
 
 .contribution-desc {
@@ -242,4 +280,65 @@ body {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--accent-color);
+}
+
+.code-section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.code-toggle {
+  width: 100%;
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.55rem 0.8rem;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.code-toggle:hover {
+  background: var(--accent-color);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.code-panel {
+  margin-top: 1rem;
+  overflow: hidden;
+  border: 1px solid #1f2937;
+  border-radius: 10px;
+  background: #101722;
+  box-shadow: 0 14px 30px rgba(16, 23, 34, 0.16);
+}
+
+.code-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #182235;
+  color: #d8e2f0;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.code-panel-header span:last-child {
+  color: #9fd3ff;
+}
+
+.code-block {
+  max-height: 360px;
+  margin: 0;
+  padding: 1rem;
+  overflow: auto;
+  color: #e8edf5;
+  font-size: 0.83rem;
+  line-height: 1.55;
+  tab-size: 2;
+  white-space: pre;
 }
