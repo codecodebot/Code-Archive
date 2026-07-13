@@ -168,6 +168,19 @@ body {
   margin: 0;
 }
 
+.highlight-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.55rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid #b7791f;
+  border-radius: 6px;
+  background-color: #fff7e6;
+  color: #8a5600;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
 .status-badge {
   font-size: 0.75rem;
   padding: 0.25rem 0.6rem;

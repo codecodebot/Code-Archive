@@ -9,7 +9,10 @@ const ProblemCard = ({ problem }) => {
   return (
     <div className="problem-card">
       <div className="problem-header">
-        <h3 className="problem-title">{problem.title}</h3>
+        <div>
+          <h3 className="problem-title">{problem.title}</h3>
+          {problem.highlight && <span className="highlight-badge">{problem.highlight}</span>}
+        </div>
         <span className={`status-badge ${problem.completed ? 'completed' : 'pending'}`}>
           {problem.completed ? 'Completed' : 'In Progress'}
         </span>
